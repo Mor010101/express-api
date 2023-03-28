@@ -5,8 +5,7 @@ const contractsController = require('../controllers/contractsController');
 
 //presentation layer, only describe routes here
 router.get('/contracts', contractsController.getAllContracts)
-
-// router.post('/contract', contractsController)
+router.post('/contract', contractsController.createContract)
 // router.put('/contract:id', contractsController)
 // router.delete('/contract:id', contractsController)
 
