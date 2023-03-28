@@ -1,6 +1,6 @@
-import express, { response } from "express";
-import bodyParser from "body-parser";
-import routes from "./routes/routes.js" 
+const express = require('express');
+const bodyParser = require('body-parser');
+const sequelize = require('./models');
 
 const port = 3002;
 const app = express();
@@ -11,9 +11,16 @@ app.use(
         extended: true,
     })
 );
+app.use(require('./routes/routes'));
 
-routes(app);
+sequelize.authenticate().then(() =>{
+    console.log('Connection successful');
+})
+.catch(err => {
+    console.error('Unable to connect to db: ',err);
+});
 
 const server = app.listen(port, (error) => {
-    console.log("Server listening on port: %s", server.address().port);
+    if (error) return console.log(`Error: ${error}`);
+	console.log(`Server listening on port ${server.address().port}`);
 });
